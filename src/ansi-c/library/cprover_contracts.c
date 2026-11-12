@@ -791,7 +791,9 @@ __CPROVER_HIDE:;
   if(!car.is_writable)
     return 0;
 
-  if(set->allocated.elems[__CPROVER_POINTER_OBJECT(ptr)] != 0)
+  __CPROVER_bool is_local =
+    set->allocated.elems[__CPROVER_POINTER_OBJECT(ptr)] != 0;
+  if(is_local)
     return 1;
 
   return __CPROVER_contracts_car_set_contains(&(set->contract_assigns), car);
@@ -815,7 +817,9 @@ __CPROVER_HIDE:;
     return 0;
 
   // is ptr pointing within some a locally allocated object ?
-  if(set->allocated.elems[__CPROVER_POINTER_OBJECT(ptr)] != 0)
+  __CPROVER_bool is_local =
+    set->allocated.elems[__CPROVER_POINTER_OBJECT(ptr)] != 0;
+  if(is_local)
     return 1;
 
   // don't even drive symex into the rest of the function if the set is empty
